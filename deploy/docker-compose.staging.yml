@@ -1,0 +1,19 @@
+name: taskflow-staging
+
+services:
+  api:
+    image: taskflow-api:${IMAGE_TAG:?IMAGE_TAG must be set}
+    container_name: taskflow-staging
+    env_file: ../config/staging.env
+    environment:
+      APP_VERSION: ${IMAGE_TAG}
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET must be set}
+    ports:
+      - "3001:3000"
+    restart: unless-stopped
+    networks:
+      - staging-net
+
+networks:
+  staging-net:
+    name: taskflow-staging-net

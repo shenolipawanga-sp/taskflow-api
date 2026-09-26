@@ -1,0 +1,29 @@
+global:
+  smtp_smarthost: "smtp.gmail.com:587"
+  smtp_from: "__ALERT_EMAIL_FROM__"
+  smtp_auth_username: "__ALERT_EMAIL_FROM__"
+  smtp_auth_password_file: /etc/alertmanager/secrets/smtp_password
+  smtp_require_tls: true
+
+route:
+  receiver: team-email
+  group_by: ["alertname", "severity"]
+  group_wait: 10s
+  group_interval: 1m
+  repeat_interval: 1h
+  routes:
+    # Critical alerts go out faster
+    - matchers: ['severity="critical"']
+      receiver: team-email
+      group_wait: 5s
+
+receivers:
+  - name: team-email
+    email_configs:
+      - to: "__ALERT_EMAIL_TO__"
+        send_resolved: true
+
+# While the API is down, don't also send the latency and memory warnings
+inhibit_rules:
+  - source_matchers: ['alertname="TaskflowApiDown"']
+    target_matchers: ['severity="warning"']

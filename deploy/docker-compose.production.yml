@@ -1,0 +1,35 @@
+name: taskflow-production
+
+services:
+  api:
+    image: taskflow-api:${IMAGE_TAG:?IMAGE_TAG must be set}
+    container_name: taskflow-prod
+    env_file: ../config/production.env
+    environment:
+      APP_VERSION: ${IMAGE_TAG}
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET must be set}
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 256M
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - prod-net
+
+networks:
+  prod-net:
+    name: taskflow-prod-net
