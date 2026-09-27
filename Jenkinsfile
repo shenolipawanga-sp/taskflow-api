@@ -31,9 +31,9 @@ pipeline {
   environment {
     APP_NAME          = 'taskflow-api'
     VERSION           = "1.0.${BUILD_NUMBER}"
-    SONAR_HOST_URL    = 'http://sonarqube:9000'     // SonarQube container on the taskflow-ci-net network
+    SONAR_HOST_URL    = 'http://sonarqube:9000'     
     SONAR_PROJECT_KEY = 'taskflow-api'
-    ALERT_EMAIL_TO    = 'CHANGE_ME@example.com'     // who receives pipeline and monitoring emails
+    ALERT_EMAIL_TO    = 'shenoli.pawanga@gmail.com'    
     JWT_SECRET        = credentials('taskflow-jwt-secret')
   }
 
