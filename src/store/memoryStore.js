@@ -29,7 +29,7 @@ function createMemoryStore() {
       return task ? { ...task } : undefined;
     },
     listTasks(predicate) {
-      return [...tasks.values()].filter(predicate).map((task) => ({ ...task }));
+      return [...tasks.values()].filter((task) => predicate(task)).map((task) => ({ ...task }));
     },
     updateTask(id, changes) {
       const updated = { ...tasks.get(id), ...changes };
