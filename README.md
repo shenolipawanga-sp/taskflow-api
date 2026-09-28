@@ -129,4 +129,4 @@ Jenkinsfile          the pipeline
 ## Known limitations
 
 Data is held in memory, so it resets when a container restarts. The store sits behind a small interface in `src/store/memoryStore.js`, so a database could replace it without touching the services. Staging, production and monitoring all share one Docker host, which is fine for a lab but not how production would be separated in practice.
-pipeline
+configer
